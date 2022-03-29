@@ -1,4 +1,7 @@
 {
+    "bluemmb/faker-picsum-photos-provider": {
+        "version": "v2.0"
+    },
     "cocur/slugify": {
         "version": "v4.1.0"
     },
@@ -117,6 +120,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
+    },
+    "pelmered/fake-car": {
+        "version": "1.7"
     },
     "psr/cache": {
         "version": "1.0.1"
