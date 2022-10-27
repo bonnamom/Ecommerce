@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
@@ -36,7 +38,6 @@ class ProductController extends AbstractController
     /**
      * @Route("/{category_slug}/{slug}", name="product_read")
      *
-     * @return void
      */
     public function read($slug, ProductRepository $productRepository)
     {
@@ -45,11 +46,11 @@ class ProductController extends AbstractController
         ]);
 
         if (!$product) {
-            throw $this->createNotFoundException('La produit demandée n\'existe pas');
+            throw $this->createNotFoundException('Le produit demandée n\'existe pas');
         }
 
         return $this->render('product/read.html.twig', [
-            'product' => $product
+            'product' => $product,
         ]);
     }
 
@@ -86,7 +87,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product/{id}/edit", requirements={"id":"\d+"}, name="product_edit")
      */
-    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger)
+    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger, ValidatorInterface $validator)
     {
         $product = $productRepository->find($id);
 

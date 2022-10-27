@@ -8,7 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -22,9 +21,6 @@ class ProductType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Modèle du véhicule',
                 'attr' => ['placeholder' => 'Tapez le nom du modèle'],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                ],
             ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Courte description',
@@ -33,9 +29,6 @@ class ProductType extends AbstractType
             ->add('price', MoneyType::class, [
                 'label' => 'Prix du véhicule',
                 'attr' => ['placeholder' => 'Tapez le prix du véhicule en €'],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                ],
             ])
             ->add('mainPicture', UrlType::class, [
                 'label' => 'Photo du véhicule',
@@ -46,7 +39,7 @@ class ProductType extends AbstractType
                 'placeholder' => '-- Choisir une catégorie --',
                 'class' => Category::class,
                 'choice_label' => function (Category $category) {
-                    return ($category->getName());
+                    return strtoupper(($category->getName()));
                 }
             ]);
     }
